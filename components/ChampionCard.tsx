@@ -1,27 +1,48 @@
-{/* Username */}
-<div className="absolute top-[95px] w-full text-center text-xl font-extrabold text-white tracking-widest">
-  {username.toUpperCase()}
-</div>
+const ChampionCard = ({ username, data }: Props) => {
+  const entries = [
+    { label: "7 Days", key: "7d" },
+    { label: "30 Days", key: "30d" },
+    { label: "3 Months", key: "90d" },
+    { label: "6 Months", key: "180d" },
+  ];
 
-{/* Table Content (shifted slightly higher) */}
-<div className="absolute bottom-[165px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
-  {entries.map(({ label, key }) => {
-    const row = data[key as keyof typeof data];
-    return (
-      <div className="flex justify-between px-4" key={key}>
-        <span>{label}</span>
-        <span>:</span>
-        <span>
-          {row.rank !== null && row.rank !== undefined
-            ? `#${row.rank}`
-            : "-"}
-        </span>
-        <span>
-          {row.rank !== null && row.rank !== undefined
-            ? row.title
-            : "-"}
-        </span>
+  return (
+    <div className="relative w-[460px] h-[700px]">
+      {/* Background image */}
+      <Image
+        src="/card-template.png"
+        alt="Champion Card"
+        fill
+        className="object-contain"
+      />
+
+      {/* Username */}
+      <div className="absolute top-[95px] w-full text-center text-xl font-extrabold text-white tracking-widest">
+        {username.toUpperCase()}
       </div>
-    );
-  })}
-</div>
+
+      {/* Table Content */}
+      <div className="absolute bottom-[165px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
+        {entries.map(({ label, key }) => {
+          const row = data[key as keyof typeof data];
+          return (
+            <div className="flex justify-between px-4" key={key}>
+              <span>{label}</span>
+              <span>:</span>
+              <span>
+                {row.rank !== null && row.rank !== undefined
+                  ? `#${row.rank}`
+                  : "-"}
+              </span>
+              <span>
+                {row.rank !== null && row.rank !== undefined
+                  ? row.title
+                  : "-"}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
