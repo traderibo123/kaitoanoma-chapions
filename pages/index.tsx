@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ChampionCard from "../components/ChampionCard";
+import ShareCard from "../components/ShareCard"; // EKLENDİ
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -41,9 +42,12 @@ export default function Home() {
 
       {data && (
         <>
-          <ChampionCard username={username} data={data} />
+          {/* CARD İÇİN PAYLAŞIM BİLEŞENİ */}
+          <ShareCard username={username}>
+            <ChampionCard username={username} data={data} />
+          </ShareCard>
 
-          {/* Share on X Button */}
+          {/* X'TE PAYLAŞ BUTONU */}
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
               `Just generated my Anoma × Kaito Champion Card! 🧙‍♂️\n\nWhere do you rank?\n\n`
