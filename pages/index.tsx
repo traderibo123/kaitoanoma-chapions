@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ChampionCard from "../components/ChampionCard";
-import ShareCard from "../components/ShareCard"; // EKLENDİ
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -21,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-black text-white font-sora flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-6">Anoma × Kaito Champion Cards</h1>
 
       <input
@@ -42,12 +41,9 @@ export default function Home() {
 
       {data && (
         <>
-          {/* CARD İÇİN PAYLAŞIM BİLEŞENİ */}
-          <ShareCard username={username}>
-            <ChampionCard username={username} data={data} />
-          </ShareCard>
+          <ChampionCard username={username} data={data} />
 
-          {/* X'TE PAYLAŞ BUTONU */}
+          {/* Share on X Button */}
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
               `Just generated my Anoma × Kaito Champion Card! 🧙‍♂️\n\nWhere do you rank?\n\n`
