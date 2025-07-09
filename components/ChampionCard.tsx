@@ -36,8 +36,8 @@ const ChampionCard = ({ username, data }: Props) => {
         {username.toUpperCase()}
       </div>
 
-      {/* Table Content */}
-      <div className="absolute bottom-[115px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
+      {/* Table Content (shifted 2 lines up) */}
+      <div className="absolute bottom-[150px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
         {entries.map(({ label, key }) => {
           const row = data[key as keyof typeof data];
           return (
