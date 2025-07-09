@@ -1,36 +1,35 @@
-export default function ChampionCard({ data }) {
-  const labels = {
-    "7d": "7 Days",
-    "30d": "30 Day",
-    "90d": "3 Month",
-    "180d": "6 Month"
-  };
+// components/ChampionCard.tsx
+import Image from 'next/image';
 
-  const getTitleColor = (title) => {
-    if (title === "Wizard") return "text-yellow-400";
-    if (title === "Grand Master") return "text-indigo-300";
-    if (title === "Master") return "text-green-300";
-    return "text-gray-400";
+interface Props {
+  data: {
+    username: string;
+    ['7d']: { title: string; rank: number | null };
+    ['30d']: { title: string; rank: number | null };
+    ['90d']: { title: string; rank: number | null };
+    ['180d']: { title: string; rank: number | null };
   };
+}
 
+export default function ChampionCard({ data }: Props) {
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-purple-900 rounded-xl p-6 w-full max-w-md shadow-lg border border-purple-500">
-      <div className="text-center text-2xl text-purple-200 font-bold mb-6">
+    <div className="relative w-[400px] h-[600px] mt-10 mx-auto">
+      <Image
+        src="/card-template.png"
+        alt="Champion Card"
+        layout="fill"
+        objectFit="cover"
+        priority
+      />
+      <div className="absolute top-20 w-full text-center text-xl font-bold uppercase text-white">
         {data.username}
       </div>
-
-      <div className="bg-black bg-opacity-20 rounded-lg px-4 py-2">
-        {Object.keys(labels).map((key) => (
-          <div key={key} className="flex justify-between border-b border-white/10 py-2 text-white text-sm">
-            <span className="font-medium">{labels[key]}</span>
-            <span className={`${getTitleColor(data[key]?.title)}`}>
-              {data[key]?.rank ? `#${data[key].rank} – ${data[key].title}` : "–"}
-            </span>
-          </div>
-        ))}
+      <div className="absolute bottom-16 left-6 text-sm text-white leading-relaxed">
+        <p>7 Days: {data["7d"].title}</p>
+        <p>30 Days: {data["30d"].title}</p>
+        <p>3 Months: {data["90d"].title}</p>
+        <p>6 Months: {data["180d"].title}</p>
       </div>
-
-      <div className="mt-6 text-xs text-white/40 italic text-center">Created by traderibo123</div>
     </div>
   );
 }
