@@ -1,69 +1,65 @@
-// components/ChampionCard.tsx
 import Image from "next/image";
 
-type Props = {
-  data: any;
-  username: string;
+type LeaderboardData = {
+  title: string;
+  rank: number | null;
 };
 
-export default function ChampionCard({ data, username }: Props) {
-  const ranks: Record<string, string> = {
-    "Wizard": "#0 - #10",
-    "Grand Master": "#11 - #50",
-    "Master": "#51 - #100",
+type Props = {
+  username: string;
+  data: {
+    "7d": LeaderboardData;
+    "30d": LeaderboardData;
+    "90d": LeaderboardData;
+    "180d": LeaderboardData;
   };
+};
 
-  const getRank = (index: number | null) => {
-    if (index === null || index === undefined) return "-";
-    if (index <= 10) return "Wizard";
-    if (index <= 50) return "Grand Master";
-    if (index <= 100) return "Master";
-    return "-";
-  };
-
-  const formatIndex = (index: number | null) => {
-    if (index === null || index === undefined) return "-";
-    return `#${index}`;
-  };
-
-  const durationLabels = [
-    { key: "7d", label: "7 Days" },
-    { key: "30d", label: "30 Days" },
-    { key: "90d", label: "3 Months" },
-    { key: "180d", label: "6 Months" },
+const ChampionCard = ({ username, data }: Props) => {
+  const entries = [
+    { label: "7 Days", key: "7d" },
+    { label: "30 Days", key: "30d" },
+    { label: "3 Months", key: "90d" },
+    { label: "6 Months", key: "180d" },
   ];
 
   return (
-    <div className="relative w-[512px] h-[768px]">
+    <div className="relative w-[460px] h-[700px]">
       <Image
-        src="/1.png"
+        src="/card-template.png"
         alt="Champion Card"
-        layout="fill"
-        objectFit="cover"
-        priority
+        fill
+        className="object-contain"
       />
-      <div className="absolute top-[48px] w-full text-center text-white font-bold text-[28px] tracking-wide">
+      {/* Username */}
+      <div className="absolute top-[78px] w-full text-center text-xl font-extrabold text-white tracking-widest">
         {username.toUpperCase()}
       </div>
 
-      <div className="absolute bottom-[140px] left-[55px] text-white font-medium text-[16px] leading-[40px] w-[400px]">
-        <table className="w-full text-left">
-          <tbody>
-            {durationLabels.map((duration, i) => {
-              const index = data?.[duration.key]?.index ?? null;
-              const rank = getRank(index);
-              return (
-                <tr key={duration.key}>
-                  <td className="w-[130px]">{duration.label}</td>
-                  <td className="w-[40px] text-center">:</td>
-                  <td className="w-[80px]">{formatIndex(index)}</td>
-                  <td className="w-[120px]">{rank}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      {/* Table Content */}
+      <div className="absolute bottom-[115px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
+        {entries.map(({ label, key }) => {
+          const row = data[key as keyof typeof data];
+          return (
+            <div className="flex justify-between px-4" key={key}>
+              <span>{label}</span>
+              <span>:</span>
+              <span>
+                {row.rank !== null && row.rank !== undefined
+                  ? `#${row.rank}`
+                  : "-"}
+              </span>
+              <span>
+                {row.rank !== null && row.rank !== undefined
+                  ? row.title
+                  : "-"}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
-}
+};
+
+export default ChampionCard;
