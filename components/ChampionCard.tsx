@@ -58,10 +58,6 @@ const ChampionCard = ({ username, data }: Props) => {
           );
         })}
       </div>
-
-      {/* Footer */}
-      <div className="absolute bottom-[50px] w-full text-center text-white text-[14px] font-semibold tracking-wide">
-             </div>
     </div>
   );
 };
