@@ -23,7 +23,7 @@ export default function Home() {
       <button onClick={fetchData} className="bg-purple-600 px-6 py-2 rounded mb-6">
         Generate Card
       </button>
-      {data && <ChampionCard data={data} />}
+      {data && <ChampionCard data={data} username={username} />}
     </div>
   );
 }
