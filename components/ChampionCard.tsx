@@ -1,3 +1,20 @@
+import Image from "next/image";
+
+type LeaderboardData = {
+  title: string;
+  rank: number | null;
+};
+
+type Props = {
+  username: string;
+  data: {
+    "7d": LeaderboardData;
+    "30d": LeaderboardData;
+    "90d": LeaderboardData;
+    "180d": LeaderboardData;
+  };
+};
+
 const ChampionCard = ({ username, data }: Props) => {
   const entries = [
     { label: "7 Days", key: "7d" },
@@ -8,7 +25,6 @@ const ChampionCard = ({ username, data }: Props) => {
 
   return (
     <div className="relative w-[460px] h-[700px]">
-      {/* Background image */}
       <Image
         src="/card-template.png"
         alt="Champion Card"
@@ -16,12 +32,12 @@ const ChampionCard = ({ username, data }: Props) => {
         className="object-contain"
       />
 
-      {/* Username */}
+      {/* Username (slightly lower) */}
       <div className="absolute top-[95px] w-full text-center text-xl font-extrabold text-white tracking-widest">
         {username.toUpperCase()}
       </div>
 
-      {/* Table Content */}
+      {/* Table Content (slightly higher) */}
       <div className="absolute bottom-[165px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
         {entries.map(({ label, key }) => {
           const row = data[key as keyof typeof data];
@@ -46,3 +62,5 @@ const ChampionCard = ({ username, data }: Props) => {
     </div>
   );
 };
+
+export default ChampionCard;
