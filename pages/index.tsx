@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChampionCard from '../components/ChampionCard';
+import ChampionCard from "../components/ChampionCard";
 
 export default function Home() {
   const [username, setUsername] = useState('');
