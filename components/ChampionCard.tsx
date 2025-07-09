@@ -1,65 +1,66 @@
+// components/ChampionCard.tsx
 import Image from "next/image";
 
-type LeaderboardData = {
-  title: string;
-  rank: number | null;
-};
-
 type Props = {
-  username: string;
   data: {
-    "7d": LeaderboardData;
-    "30d": LeaderboardData;
-    "90d": LeaderboardData;
-    "180d": LeaderboardData;
+    username: string;
+    ["7d"]: { rank: number | null; title: string };
+    ["30d"]: { rank: number | null; title: string };
+    ["90d"]: { rank: number | null; title: string };
+    ["180d"]: { rank: number | null; title: string };
   };
 };
 
-const ChampionCard = ({ username, data }: Props) => {
-  const entries = [
-    { label: "7 Days", key: "7d" },
-    { label: "30 Days", key: "30d" },
-    { label: "3 Months", key: "90d" },
-    { label: "6 Months", key: "180d" },
-  ];
+export default function ChampionCard({ data }: Props) {
+  const getRankDisplay = (rank: number | null) => {
+    return rank !== null ? `#${rank}` : "-";
+  };
+
+  const getTitleDisplay = (title: string) => {
+    return title && title !== "Participant" ? title : "-";
+  };
 
   return (
-    <div className="relative w-[460px] h-[700px]">
+    <div className="relative w-[380px] h-[540px] mt-10">
       <Image
         src="/card-template.png"
-        alt="Champion Card"
-        fill
-        className="object-contain"
+        alt="Card Template"
+        layout="fill"
+        objectFit="cover"
+        priority
       />
       {/* Username */}
-      <div className="absolute top-[78px] w-full text-center text-xl font-extrabold text-white tracking-widest">
-        {username.toUpperCase()}
+      <div className="absolute top-[60px] w-full text-center text-white text-[22px] font-extrabold tracking-wide">
+        {data.username.toUpperCase()}
       </div>
 
       {/* Table Content */}
-      <div className="absolute bottom-[115px] left-[55px] right-[55px] text-white text-[14px] font-semibold leading-[2.2rem]">
-        {entries.map(({ label, key }) => {
-          const row = data[key as keyof typeof data];
-          return (
-            <div className="flex justify-between px-4" key={key}>
-              <span>{label}</span>
-              <span>:</span>
-              <span>
-                {row.rank !== null && row.rank !== undefined
-                  ? `#${row.rank}`
-                  : "-"}
-              </span>
-              <span>
-                {row.rank !== null && row.rank !== undefined
-                  ? row.title
-                  : "-"}
-              </span>
-            </div>
-          );
-        })}
+      <div className="absolute left-[50px] top-[290px] text-white text-sm font-medium leading-relaxed">
+        <div className="flex justify-between w-[280px]">
+          <span>7 Days</span>
+          <span>:</span>
+          <span>{getRankDisplay(data["7d"].rank)}</span>
+          <span>{getTitleDisplay(data["7d"].title)}</span>
+        </div>
+        <div className="flex justify-between w-[280px]">
+          <span>30 Days</span>
+          <span>:</span>
+          <span>{getRankDisplay(data["30d"].rank)}</span>
+          <span>{getTitleDisplay(data["30d"].title)}</span>
+        </div>
+        <div className="flex justify-between w-[280px]">
+          <span>3 Months</span>
+          <span>:</span>
+          <span>{getRankDisplay(data["90d"].rank)}</span>
+          <span>{getTitleDisplay(data["90d"].title)}</span>
+        </div>
+        <div className="flex justify-between w-[280px]">
+          <span>6 Months</span>
+          <span>:</span>
+          <span>{getRankDisplay(data["180d"].rank)}</span>
+          <span>{getTitleDisplay(data["180d"].title)}</span>
+        </div>
       </div>
     </div>
   );
-};
-
-export default ChampionCard;
+}
